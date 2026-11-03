@@ -12,21 +12,25 @@ namespace ConsoleApp1
     {
         static void Main(string[] args) 
         {
+            List<string> database = new List<string>();
+            bool on = true;
             Console.WriteLine("Welcome to a calculator");
             Console.WriteLine("It supports basic arithmetic functions and vat calculations");
             Console.WriteLine("Please input 1 for the first mode and 2 for the second ");
-            while (true) 
+            CalculatorService calculator = new CalculatorService();
+            VatService vat = new VatService();
+            while (on) 
             { 
-                int input = int.Parse(Console.ReadLine()); 
+                int input = int.Parse(Console.ReadLine());
+                Console.WriteLine("Input 1 for a regulator calculator, 2 for a vat calculator, 3 to view last 3 operations and 4 to exit the program");
                 switch (input) 
                 { 
                     case 1:
-                        CalculatorService calculator = new CalculatorService();
                         Console.WriteLine("Input the first number "); 
                         double a = double.Parse(Console.ReadLine()); 
                         Console.WriteLine("Input the second number "); 
                         double b = double.Parse(Console.ReadLine()); 
-                        Console.WriteLine("Input an operation"); 
+                        Console.WriteLine("Input an operation (1 for plus, 2 for minus, 3 for multiplication, 4 for division)"); 
                         int operation = int.Parse(Console.ReadLine()); 
                         double result; 
                         switch (operation) 
@@ -36,6 +40,11 @@ namespace ConsoleApp1
                                 {
                                     result = calculator.Add(a, b);
                                     Console.WriteLine(result);
+                                    database.Add($"{a} + {b} = {result}");
+                                    if (database.Count > 3)
+                                    {
+                                        database.RemoveAt(0);
+                                    }
                                     break;
                                 }
                                 catch (FormatException)
@@ -48,6 +57,11 @@ namespace ConsoleApp1
                                 {
                                     result = calculator.Subtract(a, b);
                                     Console.WriteLine(result);
+                                    database.Add($"{a} - {b} = {result}");
+                                    if (database.Count > 3)
+                                    {
+                                        database.RemoveAt(0);
+                                    }
                                     break;
                                 }
                                 catch (FormatException)
@@ -60,6 +74,11 @@ namespace ConsoleApp1
                                 {
                                     result = calculator.Multiply(a, b);
                                     Console.WriteLine(result);
+                                    database.Add($"{a} * {b} = {result}");
+                                    if (database.Count > 3)
+                                    {
+                                        database.RemoveAt(0);
+                                    }
                                     break;
                                 }
                                 catch (FormatException)
@@ -72,6 +91,11 @@ namespace ConsoleApp1
                                 {
                                     result = calculator.Divide(a, b);
                                     Console.WriteLine(result);
+                                    database.Add($"{a} / {b} = {result}");
+                                    if (database.Count > 3)
+                                    {
+                                        database.RemoveAt(0);
+                                    }
                                     break;
                                 }
                                 catch (FormatException)
@@ -84,12 +108,12 @@ namespace ConsoleApp1
                                     Console.WriteLine($"Error: {ex.Message}");
                                     break;
                                 }
-                            default: 
+                            default:
+                                Console.WriteLine("Thats not a valid input operation");
                                 break; 
                         } 
                         break; 
                     case 2:
-                        VatService vat = new VatService();
                         Console.WriteLine("Input the sum ");
                         double s = double.Parse(Console.ReadLine());
                         Console.WriteLine("Input the percentage ");
@@ -109,7 +133,18 @@ namespace ConsoleApp1
                                 Console.WriteLine("Not a valid input");
                                 break;
                         }
-                        break; 
+                        break;
+                    case 3:
+                        Console.WriteLine("Here are the last 3 operations");
+                        for (int i = 0; i < database.Count; i++)
+                        {
+                            Console.WriteLine(database[i]);
+                        }
+                        break;
+                    case 4:
+                        Console.WriteLine("Thank you for using our calculator");
+                        on = false;
+                        break;
                     default: Console.WriteLine("Such a mode is not supported"); 
                         break; 
                 } 
