@@ -16,13 +16,12 @@ namespace ConsoleApp1
             bool on = true;
             Console.WriteLine("Welcome to a calculator");
             Console.WriteLine("It supports basic arithmetic functions and vat calculations");
-            Console.WriteLine("Please input 1 for the first mode and 2 for the second ");
+            Console.WriteLine("Input 1 for a regulator calculator, 2 for a vat calculator, 3 to view last 3 operations and 4 to exit the program");
             CalculatorService calculator = new CalculatorService();
             VatService vat = new VatService();
             while (on) 
             { 
                 int input = int.Parse(Console.ReadLine());
-                Console.WriteLine("Input 1 for a regulator calculator, 2 for a vat calculator, 3 to view last 3 operations and 4 to exit the program");
                 switch (input) 
                 { 
                     case 1:
@@ -118,7 +117,7 @@ namespace ConsoleApp1
                         double s = double.Parse(Console.ReadLine());
                         Console.WriteLine("Input the percentage ");
                         double p = double.Parse(Console.ReadLine());
-                        Console.WriteLine("Input an operation");
+                        Console.WriteLine("Input an operation (n for netno, p for procentno)");
                         string mode = Console.ReadLine();
                         double calculation;
                         switch (mode)
